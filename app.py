@@ -1,6 +1,8 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st 
+from PIL import Image
+
 
 # PANDAS DATABASE CREATION
 st.set_page_config(
@@ -68,7 +70,10 @@ df_selection=df.query(
 
 
 # MAINPAGE
-st.title(":bar_chart: Sales Dashboard")
+image = Image.open("excel-banner.png")
+st.image(image, caption='created by MJ')
+
+st.subheader(":bar_chart: Sales Dashboard")
 st.markdown("##")
 
 ################################
@@ -86,14 +91,14 @@ left_column,middle_column,right_column=st.columns(3)
 
 # make a row with 3 columns
 with left_column:
-  st.subheader("Total Sales:")
-  st.subheader(f"US $ {total_sales:,}")
+  st.caption("Total Sales:")
+  st.caption(f"US $ {total_sales:,}")
 with middle_column:
-  st.subheader("Average Rating:")
-  st.subheader(f"{average_rating} - {star_rating}")
+  st.caption("Average Rating:")
+  st.caption(f"{average_rating} - {star_rating}")
 with right_column:
-  st.subheader("Average Sales Per Transaction:")
-  st.subheader(f"US $ {average_sale_by_transaction}")
+  st.caption("Average Sales Per Transaction:")
+  st.caption(f"US $ {average_sale_by_transaction}")
 
   
 
