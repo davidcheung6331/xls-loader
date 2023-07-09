@@ -3,10 +3,10 @@
 primaryColor = "#144272"
 
 # Background color for the main content area.
-backgroundColor = "#0A2647"
+backgroundColor = "#134134"
 
 # Background color used for the sidebar and most interactive widgets.
-secondaryBackgroundColor = "#205295"
+secondaryBackgroundColor = "#318ce7"
 
 # Color used for almost all text.
 textColor = "#FFF"
