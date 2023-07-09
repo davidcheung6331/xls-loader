@@ -21,6 +21,7 @@ def get_data_from_excel():
       nrows=1000,
     )
     # Add 'hour' column to dataframe for second barchart
+    # df["hour"]=pd.to_datetime(df["Time"],format="%H:%M:%S").dt.hour
     df["hour"]=pd.to_datetime(df["Time"],format="%H:%M:%S").dt.hour
     return df
 
@@ -110,9 +111,8 @@ st.markdown("---")
 
 # SALES BY PRODUCT LINE [BAR CHART]
 
-sales_by_product_line=(
-  df_selection.groupby(by=["Product line"]).sum()[["Total"]].sort_values(by="Total")
-)
+#sales_by_product_line=(df_selection.groupby(by=["Product line"]).sum())
+sales_by_product_line = df_selection.groupby(by=["Product line"]).sum(numeric_only=True)
 
 
 
@@ -134,19 +134,20 @@ fig_product_sales.update_layout(
 
 # SALES BY HOUR [BAR CHART]
 
-# sales_by_hour=df_selection.groupby(by=["hour"]).sum()[["Total"]]
+# sales_by_hour=df_selection.groupby(["hour"]).sum()
+sales_by_hour = df_selection.groupby(["hour"]).sum(numeric_only=True)
 # st.caption("sales by hour")
-# st.write(sales_by_hour.head(5))
+st.write(sales_by_hour.head(5))
 
 
-# fig_hourly_sales=px.bar(
-#     sales_by_hour,
-#     x=sales_by_hour.index,
-#     y="Total",
-#     title="<b>Sales by Hour</b>",
-#     color_discrete_sequence=["#205295"] * len(sales_by_hour),
-#     template="plotly_white",
-# )
+fig_hourly_sales=px.bar(
+    sales_by_hour,
+    x=sales_by_hour.index,
+    y="Total",
+    title="<b>Sales by Hour</b>",
+    color_discrete_sequence=["#205295"] * len(sales_by_hour),
+    template="plotly_white",
+)
 
 fig_hourly_sales.update_layout(
     xaxis=dict(tickmode="linear"),
@@ -158,7 +159,7 @@ fig_hourly_sales.update_layout(
 # Displaying charts
 left_column,right_column=st.columns(2)
 left_column.plotly_chart(fig_product_sales,use_container_width=True)
-# right_column.plotly_chart(fig_hourly_sales,use_container_width=True)
+right_column.plotly_chart(fig_hourly_sales,use_container_width=True)
 
 
 # HIDE STREAMLIT STYLE
